@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Mapa de Navegação e Estados — Raízes do Nordeste</title>
+<link rel="stylesheet" href="diagrama.css" />
+<style>
+  .flow-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .page-step {
+    background: #fff;
+    border: 1.5px solid #2c3e50;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    width: 140px;
+  }
+  .state-node {
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    text-align: center;
+    width: 128px;
+    border: 1px dashed;
+  }
+  .state-loading {
+    background: #eef2f7;
+    border-color: #7f8c8d;
+    color: #4b5760;
+  }
+  .state-empty {
+    background: #f1efe9;
+    border-color: #a8988a;
+    color: #6b6058;
+  }
+  .state-error {
+    background: #fdecea;
+    border-color: #c0392b;
+    color: #7a271a;
+  }
+</style>
+</head>
+<body>
+<h1>Mapa de Navegação e Estados</h1>
+<p class="subtitle">Fluxo entre as telas do protótipo e os estados de carregando / vazio / erro (Questão de Modelagem)</p>
+
+<div class="diagram-container" style="display:grid; grid-template-columns: repeat(6, 1fr); gap: 16px;">
+  <svg class="connections"><defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#8a7f74" />
+    </marker>
+  </defs></svg>
+
+  <div class="flow-col">
+    <div class="page-step node" id="page-home">Home</div>
+    <div class="state-node state-loading node" id="state-home-loading">carregando<br/>destaques</div>
+  </div>
+
+  <div class="flow-col">
+    <div class="page-step node" id="page-cardapio">Cardápio</div>
+    <div class="state-node state-loading node" id="state-cardapio-loading">carregando</div>
+    <div class="state-node state-empty node" id="state-cardapio-vazio">vazio</div>
+    <div class="state-node state-error node" id="state-cardapio-erro">erro</div>
+  </div>
+
+  <div class="flow-col">
+    <div class="page-step node" id="page-carrinho">Carrinho</div>
+    <div class="state-node state-empty node" id="state-carrinho-vazio">vazio</div>
+  </div>
+
+  <div class="flow-col">
+    <div class="page-step node" id="page-checkout">Checkout /<br/>Pagamento</div>
+    <div class="state-node state-loading node" id="state-checkout-processando">processando</div>
+    <div class="state-node state-error node" id="state-checkout-recusado">recusado / erro</div>
+  </div>
+
+  <div class="flow-col">
+    <div class="page-step node" id="page-confirmacao">Pedido<br/>confirmado</div>
+  </div>
+
+  <div class="flow-col">
+    <div class="page-step node" id="page-acompanhamento">Acompanhamento</div>
+    <div class="state-node state-loading node" id="state-acompanhamento-loading">carregando status</div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="swatch"></span> navegação entre telas</span>
+  <span><span class="swatch dashed"></span> estado da tela</span>
+</div>
+<p class="print-hint">Dica: Ctrl/Cmd + P → "Salvar como PDF" para gerar a imagem deste diagrama para o documento entregável.</p>
+
+<script src="diagrama.js"></script>
+<script>
+  window.__redrawDiagram = function () {
+    const svg = document.querySelector('.connections')
+    svg.querySelectorAll('line, text').forEach((el) => el.remove())
+
+    diagramConnect('#page-home', '#page-cardapio', { arrow: true })
+    diagramConnect('#page-cardapio', '#page-carrinho', { arrow: true, label: 'adicionar produto' })
+    diagramConnect('#page-carrinho', '#page-checkout', { arrow: true, label: 'finalizar pedido' })
+    diagramConnect('#page-checkout', '#page-confirmacao', { arrow: true, label: 'aprovado' })
+    diagramConnect('#page-confirmacao', '#page-acompanhamento', { arrow: true })
+
+    diagramConnect('#page-home', '#state-home-loading', { dashed: true })
+    diagramConnect('#page-cardapio', '#state-cardapio-loading', { dashed: true })
+    diagramConnect('#page-cardapio', '#state-cardapio-vazio', { dashed: true })
+    diagramConnect('#page-cardapio', '#state-cardapio-erro', { dashed: true })
+    diagramConnect('#page-carrinho', '#state-carrinho-vazio', { dashed: true })
+    diagramConnect('#page-checkout', '#state-checkout-processando', { dashed: true })
+    diagramConnect('#page-checkout', '#state-checkout-recusado', { dashed: true })
+    diagramConnect('#state-checkout-recusado', '#page-checkout', {
+      dashed: true,
+      arrow: true,
+      className: 'edge-include',
+      label: 'tentar novamente',
+    })
+    diagramConnect('#page-acompanhamento', '#state-acompanhamento-loading', { dashed: true })
+  }
+  window.addEventListener('load', () => window.__redrawDiagram())
+</script>
+</body>
+</html>

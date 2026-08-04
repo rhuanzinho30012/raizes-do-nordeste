@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Jornada do Usuário — Raízes do Nordeste</title>
+<link rel="stylesheet" href="diagrama.css" />
+<style>
+  .lane-title {
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #a84300;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .lane {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    align-items: center;
+  }
+  .step {
+    background: #fff;
+    border: 1.5px solid #d35400;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    text-align: center;
+    width: 160px;
+  }
+  .decision {
+    background: #fff8ec;
+    border: 1.5px dashed #a84300;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    text-align: center;
+    width: 160px;
+    font-weight: 600;
+  }
+  .final {
+    background: #eafaf1;
+    border: 1.5px solid #27ae60;
+  }
+</style>
+</head>
+<body>
+<h1>Diagrama da Jornada do Usuário</h1>
+<p class="subtitle">Do primeiro contato com o cardápio até a retirada/entrega do pedido (Seção 7 do documento)</p>
+
+<div class="diagram-container" style="display:grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
+  <svg class="connections"><defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#8a7f74" />
+    </marker>
+  </defs></svg>
+
+  <div>
+    <div class="lane-title">Entrada</div>
+    <div class="lane">
+      <div class="step node" id="step-entrada">Acessar App / Site / Totem</div>
+      <div class="step node" id="step-unidade">Selecionar unidade</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="lane-title">Cardápio &amp; Carrinho</div>
+    <div class="lane">
+      <div class="step node" id="step-cardapio">Explorar cardápio<br/>e filtros (RF05)</div>
+      <div class="step node" id="step-selecao">Adicionar produtos<br/>ao carrinho (RF06)</div>
+      <div class="step node" id="step-revisao">Revisar carrinho</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="lane-title">Autenticação</div>
+    <div class="lane">
+      <div class="decision node" id="dec-autenticado">Usuário já<br/>autenticado?</div>
+      <div class="decision node" id="dec-tem-conta">Já tem<br/>conta?</div>
+      <div class="step node" id="step-login">Login (RF02)</div>
+      <div class="step node" id="step-cadastro">Cadastro + aceite<br/>LGPD (RF01 / RF14)</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="lane-title">Pagamento</div>
+    <div class="lane">
+      <div class="step node" id="step-consentimento">Aceitar termos LGPD<br/>no checkout</div>
+      <div class="step node" id="step-pagamento">Escolher forma de<br/>pagamento (UC01)</div>
+      <div class="decision node" id="dec-aprovado">Pagamento<br/>aprovado?</div>
+      <div class="step node" id="step-erro-pagamento">Exibir erro,<br/>permitir nova tentativa</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="lane-title">Acompanhamento</div>
+    <div class="lane">
+      <div class="step node" id="step-confirmacao">Pedido confirmado</div>
+      <div class="step node" id="step-acompanhamento">Acompanhar status<br/>em tempo real (RF09)</div>
+      <div class="step final node" id="step-entrega">Retirada / Entrega<br/>(Finalizado)</div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="swatch"></span> fluxo principal</span>
+  <span><span class="swatch dashed"></span> decisão / fluxo alternativo</span>
+</div>
+<p class="print-hint">Dica: Ctrl/Cmd + P → "Salvar como PDF" para gerar a imagem deste diagrama para o documento entregável.</p>
+
+<script src="diagrama.js"></script>
+<script>
+  window.__redrawDiagram = function () {
+    const svg = document.querySelector('.connections')
+    svg.querySelectorAll('line, text').forEach((el) => el.remove())
+
+    diagramConnect('#step-entrada', '#step-unidade', { arrow: true })
+    diagramConnect('#step-unidade', '#step-cardapio', { arrow: true })
+    diagramConnect('#step-cardapio', '#step-selecao', { arrow: true })
+    diagramConnect('#step-selecao', '#step-revisao', { arrow: true })
+    diagramConnect('#step-revisao', '#dec-autenticado', { arrow: true })
+
+    diagramConnect('#dec-autenticado', '#step-consentimento', { arrow: true, label: 'sim' })
+    diagramConnect('#dec-autenticado', '#dec-tem-conta', {
+      arrow: true,
+      dashed: true,
+      className: 'edge-extend',
+      label: 'não',
+    })
+    diagramConnect('#dec-tem-conta', '#step-login', { arrow: true, dashed: true, className: 'edge-extend', label: 'sim' })
+    diagramConnect('#dec-tem-conta', '#step-cadastro', { arrow: true, dashed: true, className: 'edge-extend', label: 'não' })
+    diagramConnect('#step-login', '#step-consentimento', { arrow: true })
+    diagramConnect('#step-cadastro', '#step-consentimento', { arrow: true })
+
+    diagramConnect('#step-consentimento', '#step-pagamento', { arrow: true })
+    diagramConnect('#step-pagamento', '#dec-aprovado', { arrow: true })
+    diagramConnect('#dec-aprovado', '#step-confirmacao', { arrow: true, label: 'aprovado' })
+    diagramConnect('#dec-aprovado', '#step-erro-pagamento', {
+      arrow: true,
+      dashed: true,
+      className: 'edge-include',
+      label: 'recusado',
+    })
+    diagramConnect('#step-erro-pagamento', '#step-pagamento', {
+      arrow: true,
+      dashed: true,
+      className: 'edge-include',
+      label: 'tentar novamente',
+    })
+
+    diagramConnect('#step-confirmacao', '#step-acompanhamento', { arrow: true })
+    diagramConnect('#step-acompanhamento', '#step-entrega', { arrow: true })
+  }
+  window.addEventListener('load', () => window.__redrawDiagram())
+</script>
+</body>
+</html>
