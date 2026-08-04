@@ -49,9 +49,7 @@ export default function Cardapio() {
       <h1>Cardápio</h1>
 
       <div className="demo-toolbar">
-        <label htmlFor="simulacao">
-          Simular estado (evidência do plano de testes):
-        </label>
+        <label htmlFor="simulacao">Simular estado:</label>
         <select id="simulacao" value={simulacao} onChange={(e) => setSimulacao(e.target.value)}>
           <option value="normal">Normal</option>
           <option value="erro">Forçar erro de carregamento</option>

@@ -48,7 +48,7 @@
 </head>
 <body>
 <h1>Mapa de Navegação e Estados</h1>
-<p class="subtitle">Fluxo entre as telas do protótipo e os estados de carregando / vazio / erro (Questão de Modelagem)</p>
+<p class="subtitle">Fluxo entre as telas da aplicação e os estados de carregando / vazio / erro</p>
 
 <div class="diagram-container" style="display:grid; grid-template-columns: repeat(6, 1fr); gap: 16px;">
   <svg class="connections"><defs>
@@ -94,7 +94,7 @@
   <span><span class="swatch"></span> navegação entre telas</span>
   <span><span class="swatch dashed"></span> estado da tela</span>
 </div>
-<p class="print-hint">Dica: Ctrl/Cmd + P → "Salvar como PDF" para gerar a imagem deste diagrama para o documento entregável.</p>
+<p class="print-hint">Dica: Ctrl/Cmd + P → "Salvar como PDF" para exportar este diagrama como imagem.</p>
 
 <script src="diagrama.js"></script>
 <script>
@@ -120,6 +120,7 @@
       arrow: true,
       className: 'edge-include',
       label: 'tentar novamente',
+      offset: 18,
     })
     diagramConnect('#page-acompanhamento', '#state-acompanhamento-loading', { dashed: true })
   }

@@ -2,7 +2,7 @@ export default function PoliticaPrivacidade() {
   return (
     <div className="container container-narrow">
       <h1>Política de Privacidade</h1>
-      <p className="hint">Documento de exemplo para fins acadêmicos, alinhado à LGPD (Lei nº 13.709/2018).</p>
+      <p className="hint">Última atualização: janeiro de 2026 — em conformidade com a LGPD (Lei nº 13.709/2018).</p>
 
       <h2>1. Quais dados coletamos</h2>
       <p>

@@ -38,7 +38,6 @@ export default function Checkout() {
     setStatusPagamento('processando')
 
     try {
-      // RN03: dados bancários não são armazenados internamente — apenas repassados ao gateway externo.
       const resultado = await processarPagamento({ metodo, total })
       if (resultado.aprovado) {
         setStatusPagamento('aprovado')
@@ -96,8 +95,8 @@ export default function Checkout() {
       </fieldset>
 
       <p className="hint">
-        Dados bancários não são armazenados por este sistema (RN03) — o pagamento é apenas
-        simulado e repassado a um gateway externo fictício, conforme UC01.
+        Dados bancários não são armazenados por este sistema — o pagamento é processado
+        por um gateway externo.
       </p>
 
       <ConsentCheckbox checked={aceite} onChange={setAceite} error={erroConsentimento} />

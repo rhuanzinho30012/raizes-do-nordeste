@@ -49,8 +49,18 @@ function setupDiagram() {
     }
     const p1c = point(fromEl)
     const p2c = point(toEl)
-    const p1 = clip(p1c, p2c)
-    const p2 = clip(p2c, p1c)
+    let p1 = clip(p1c, p2c)
+    let p2 = clip(p2c, p1c)
+
+    if (opts.offset) {
+      const dx = p2c.x - p1c.x
+      const dy = p2c.y - p1c.y
+      const len = Math.hypot(dx, dy) || 1e-6
+      const nx = (-dy / len) * opts.offset
+      const ny = (dx / len) * opts.offset
+      p1 = { x: p1.x + nx, y: p1.y + ny }
+      p2 = { x: p2.x + nx, y: p2.y + ny }
+    }
 
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
     line.setAttribute('x1', p1.x)

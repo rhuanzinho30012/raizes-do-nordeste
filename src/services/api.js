@@ -6,11 +6,6 @@ function wait(ms = DELAY_MS) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-/**
- * Simula a busca do cardápio de uma unidade.
- * `opts.forceError` e `opts.forceEmpty` existem só para demonstrar
- * os estados de erro/vazio exigidos no plano de testes (não é lógica de negócio real).
- */
 export async function fetchCardapio(unidadeId, opts = {}) {
   await wait()
   if (opts.forceError) {
@@ -38,11 +33,6 @@ export async function cadastrar({ nome, email, cpf, telefone }) {
   return { nome, email, cpf, telefone, pontosFidelidade: 0 }
 }
 
-/**
- * Simula o envio do pedido para um gateway de pagamento externo (RF08 / UC01).
- * método 'cartao_recusado' existe só para demonstrar o fluxo alternativo
- * (Cenário de Teste 09 do plano de testes).
- */
 export async function processarPagamento({ metodo, total }) {
   await wait(1400)
   if (metodo === 'cartao_recusado') {

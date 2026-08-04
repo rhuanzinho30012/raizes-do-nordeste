@@ -21,7 +21,6 @@ export default function Acompanhamento() {
     })
   }, [])
 
-  // Simula atualização de status em tempo real (RF09), avançando uma etapa por vez.
   useEffect(() => {
     if (carregando) return
     if (etapaIndex >= statusPedido.length - 1) return
@@ -60,7 +59,6 @@ export default function Acompanhamento() {
       <h1>Acompanhar pedido</h1>
       <p className="hint">
         Pedido {pedido.pedidoId} — tempo estimado: {pedido.tempoEstimadoMin} min
-        {etapaIndex < statusPedido.length - 1 && ' (avança automaticamente a cada poucos segundos, só para demonstração)'}
       </p>
       <StatusTimeline etapaAtual={statusPedido[etapaIndex].chave} />
     </div>

@@ -7,7 +7,8 @@
 </head>
 <body>
 <h1>Diagrama de Casos de Uso</h1>
-<p class="subtitle">Rede "Raízes do Nordeste" — Projeto Multidisciplinar (Trilha Front-End)</p>
+<p class="subtitle">Sistema de pedidos da rede "Raízes do Nordeste".</p>
+<p>Este diagrama apresenta os principais atores e funcionalidades do sistema, organizados de forma simples para demonstrar o fluxo de uso da aplicação.</p>
 
 <div class="diagram-container" style="display:grid; grid-template-columns: 150px 1fr 170px; gap: 24px; align-items:center;">
   <svg class="connections"><defs>
@@ -16,7 +17,6 @@
     </marker>
   </defs></svg>
 
-  <!-- Atores à esquerda -->
   <div style="display:flex; flex-direction:column; gap:70px; justify-self:center;">
     <div class="actor node" id="actor-cliente">
       <svg viewBox="0 0 40 52"><g fill="none" stroke="#2b2320" stroke-width="2.5" stroke-linecap="round">
@@ -50,7 +50,6 @@
     </div>
   </div>
 
-  <!-- Sistema -->
   <div class="system-boundary">
     <span class="boundary-label">Sistema Raízes do Nordeste</span>
 
@@ -87,7 +86,6 @@
     </div>
   </div>
 
-  <!-- Atores à direita -->
   <div style="display:flex; flex-direction:column; gap:120px; justify-self:center;">
     <div class="actor node" id="actor-gerente">
       <svg viewBox="0 0 40 52"><g fill="none" stroke="#2b2320" stroke-width="2.5" stroke-linecap="round">
@@ -112,10 +110,9 @@
 </div>
 
 <div class="legend">
-  <span><span class="swatch"></span> associação (ator realiza o caso de uso)</span>
-  <span><span class="swatch dashed"></span> &lt;&lt;include&gt;&gt; / &lt;&lt;extend&gt;&gt;</span>
+  <span><span class="swatch"></span> associação entre ator e caso de uso</span>
+  <span><span class="swatch dashed"></span> relacionamento de inclusão ou extensão</span>
 </div>
-<p class="print-hint">Dica: Ctrl/Cmd + P → "Salvar como PDF" para gerar a imagem deste diagrama para o documento entregável.</p>
 
 <script src="diagrama.js"></script>
 <script>
@@ -148,7 +145,7 @@
     diagramConnect('#actor-pagamento', '#uc-retornar', { arrow: true })
     diagramConnect('#actor-pagamento', '#uc-validar', { arrow: true })
 
-    // Relacionamentos especiais entre casos de uso
+    // Relacionamentos entre casos de uso
     diagramConnect('#uc-pagamento', '#uc-processar', {
       dashed: true,
       className: 'edge-include',

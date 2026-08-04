@@ -47,7 +47,7 @@
 </head>
 <body>
 <h1>Diagrama da Jornada do Usuário</h1>
-<p class="subtitle">Do primeiro contato com o cardápio até a retirada/entrega do pedido (Seção 7 do documento)</p>
+<p class="subtitle">Do primeiro contato com o cardápio até a retirada/entrega do pedido</p>
 
 <div class="diagram-container" style="display:grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
   <svg class="connections"><defs>
@@ -67,8 +67,8 @@
   <div>
     <div class="lane-title">Cardápio &amp; Carrinho</div>
     <div class="lane">
-      <div class="step node" id="step-cardapio">Explorar cardápio<br/>e filtros (RF05)</div>
-      <div class="step node" id="step-selecao">Adicionar produtos<br/>ao carrinho (RF06)</div>
+      <div class="step node" id="step-cardapio">Explorar cardápio<br/>e filtros</div>
+      <div class="step node" id="step-selecao">Adicionar produtos<br/>ao carrinho</div>
       <div class="step node" id="step-revisao">Revisar carrinho</div>
     </div>
   </div>
@@ -78,8 +78,8 @@
     <div class="lane">
       <div class="decision node" id="dec-autenticado">Usuário já<br/>autenticado?</div>
       <div class="decision node" id="dec-tem-conta">Já tem<br/>conta?</div>
-      <div class="step node" id="step-login">Login (RF02)</div>
-      <div class="step node" id="step-cadastro">Cadastro + aceite<br/>LGPD (RF01 / RF14)</div>
+      <div class="step node" id="step-login">Login</div>
+      <div class="step node" id="step-cadastro">Cadastro + aceite<br/>LGPD</div>
     </div>
   </div>
 
@@ -87,7 +87,7 @@
     <div class="lane-title">Pagamento</div>
     <div class="lane">
       <div class="step node" id="step-consentimento">Aceitar termos LGPD<br/>no checkout</div>
-      <div class="step node" id="step-pagamento">Escolher forma de<br/>pagamento (UC01)</div>
+      <div class="step node" id="step-pagamento">Escolher forma de<br/>pagamento</div>
       <div class="decision node" id="dec-aprovado">Pagamento<br/>aprovado?</div>
       <div class="step node" id="step-erro-pagamento">Exibir erro,<br/>permitir nova tentativa</div>
     </div>
@@ -97,7 +97,7 @@
     <div class="lane-title">Acompanhamento</div>
     <div class="lane">
       <div class="step node" id="step-confirmacao">Pedido confirmado</div>
-      <div class="step node" id="step-acompanhamento">Acompanhar status<br/>em tempo real (RF09)</div>
+      <div class="step node" id="step-acompanhamento">Acompanhar status<br/>em tempo real</div>
       <div class="step final node" id="step-entrega">Retirada / Entrega<br/>(Finalizado)</div>
     </div>
   </div>
@@ -107,7 +107,7 @@
   <span><span class="swatch"></span> fluxo principal</span>
   <span><span class="swatch dashed"></span> decisão / fluxo alternativo</span>
 </div>
-<p class="print-hint">Dica: Ctrl/Cmd + P → "Salvar como PDF" para gerar a imagem deste diagrama para o documento entregável.</p>
+<p class="print-hint">Dica: Ctrl/Cmd + P → "Salvar como PDF" para exportar este diagrama como imagem.</p>
 
 <script src="diagrama.js"></script>
 <script>
